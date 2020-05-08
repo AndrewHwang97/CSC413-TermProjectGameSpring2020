@@ -1,4 +1,4 @@
-package RainbowReef;
+package RainbowReef.GameObjects;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

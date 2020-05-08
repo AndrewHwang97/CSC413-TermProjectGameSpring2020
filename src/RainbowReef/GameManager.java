@@ -5,8 +5,12 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import static javax.imageio.ImageIO.read;
+
+import RainbowReef.Blocks.*;
+import RainbowReef.GameObjects.*;
+import RainbowReef.GameUtilities.*;
+
 
 public class GameManager extends JPanel{
     public static final int SCREEN_WIDTH = 1280;
@@ -15,9 +19,9 @@ public class GameManager extends JPanel{
     private Graphics2D buffer;
     private JFrame jFrame;
     private Katch katch;
-
-
-
+    private Pop pop;
+    private Block testerBlock;
+    private CollisonDetector collisonDetector;
     public static void main(String[] args) {
         GameManager gameManager = new GameManager();
         gameManager.init();
@@ -25,6 +29,8 @@ public class GameManager extends JPanel{
 
             while (true) {
                 gameManager.katch.update();
+                gameManager.pop.update();
+                gameManager.collisonDetector.checkCollisions(gameManager.pop,gameManager.testerBlock);
                 gameManager.repaint();
                 Thread.sleep(1000 / 144);
             }
@@ -45,8 +51,10 @@ public class GameManager extends JPanel{
             System.out.println(ex.getMessage());
         }
         katch = new Katch(katchImage, GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT - 100);
+        pop = new Pop(GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT-90);
+        testerBlock = new Block_Breakable(GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT-200,"green");
 
-
+        collisonDetector = new CollisonDetector();
         KatchControls katchControl = new KatchControls(katch,
                 KeyEvent.VK_LEFT,
                 KeyEvent.VK_RIGHT);
@@ -66,7 +74,13 @@ public class GameManager extends JPanel{
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g2);
         buffer = world.createGraphics();
+        buffer.setColor(Color.black);
+        buffer.fillRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
         this.katch.draw(buffer);
+        this.pop.draw(buffer);
+        this.katch.getHitbox().draw(buffer);
+        this.testerBlock.draw(buffer);
+
         g2.drawImage(world,0,0,null);
 
     }
