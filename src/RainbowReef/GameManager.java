@@ -30,7 +30,9 @@ public class GameManager extends JPanel{
             while (true) {
                 gameManager.katch.update();
                 gameManager.pop.update();
+                gameManager.testerBlock.update();
                 gameManager.collisonDetector.checkCollisions(gameManager.pop,gameManager.testerBlock);
+                gameManager.collisonDetector.checkCollisions(gameManager.katch,gameManager.pop);
                 gameManager.repaint();
                 Thread.sleep(1000 / 144);
             }
@@ -51,7 +53,7 @@ public class GameManager extends JPanel{
             System.out.println(ex.getMessage());
         }
         katch = new Katch(katchImage, GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT - 100);
-        pop = new Pop(GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT-90);
+        pop = new Pop(GameManager.SCREEN_WIDTH/2,90);
         testerBlock = new Block_Breakable(GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT-200,"green");
 
         collisonDetector = new CollisonDetector();
@@ -78,8 +80,11 @@ public class GameManager extends JPanel{
         buffer.fillRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
         this.katch.draw(buffer);
         this.pop.draw(buffer);
-        this.katch.getHitbox().draw(buffer);
+        this.katch.getHitbox("left").draw(buffer);
+        this.katch.getHitbox("mid").draw(buffer);
+        this.katch.getHitbox("right").draw(buffer);
         this.testerBlock.draw(buffer);
+        this.testerBlock.getHitbox().draw(buffer);
 
         g2.drawImage(world,0,0,null);
 

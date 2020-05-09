@@ -18,6 +18,9 @@ public class Block_Unbreakable extends Block{
         this.sprite = blockImage;
     }
 
+    public  void takeDamage(int damage){}
+    public  void update(){}
+
     public void draw(Graphics2D g) {
         g.drawImage(sprite,x,y,null);
     }

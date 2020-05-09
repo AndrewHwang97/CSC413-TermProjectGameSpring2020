@@ -9,12 +9,16 @@ public class Katch extends GameObject{
     private boolean rightPressed;
     private boolean leftPressed;
     private int moveSpeed = 5;
-
+    Hitbox hbLeft;
+    Hitbox hbMid;
+    Hitbox hbRight;
     public Katch(Image sprite, int x, int y){
         this.x = x;
         this.y = y;
         this.sprite = sprite;
-        hitbox = new Hitbox(this);
+        hbLeft = new Hitbox(this, this.sprite.getWidth(null)/3,0);
+        hbMid = new Hitbox(this, this.sprite.getWidth(null)/3,this.sprite.getWidth(null)/3);
+        hbRight = new Hitbox(this, this.sprite.getWidth(null)/3,this.sprite.getWidth(null)/3 * 2);
     }
 
     void toggleLeftPressed(){this.leftPressed = true;}
@@ -25,7 +29,22 @@ public class Katch extends GameObject{
     public int getY(){return this.y;}
 
     public Hitbox getHitbox() {
-        return hitbox;
+        return hbLeft;
+    }
+    public Hitbox getHitbox(String hb) {
+        Hitbox retVal = null;
+        switch (hb){
+            case "left":
+                retVal = hbLeft;
+                break;
+            case "mid" :
+                retVal = hbMid;
+                break;
+            case "right" :
+                retVal =  hbRight;
+                break;
+        }
+        return retVal;
     }
 
     public void update(){
@@ -35,7 +54,9 @@ public class Katch extends GameObject{
         if(this.rightPressed){
             moveRight();
         }
-        hitbox.update(this);
+        hbLeft.update(this, 0);
+        hbMid.update(this, this.sprite.getWidth(null)/3);
+        hbRight.update(this, this.sprite.getWidth(null)/3 * 2);
 
     }
 

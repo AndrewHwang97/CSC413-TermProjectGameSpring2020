@@ -14,6 +14,7 @@ public class Block_Breakable extends Block {
     Image lightBlue;
     Image darkBlue;
     Image white;
+    boolean destroy;
     public Block_Breakable(int x, int y, String color){
         try{
             violet = read(Block.class.getClassLoader().getResource("Block1.gif"));
@@ -29,6 +30,7 @@ public class Block_Breakable extends Block {
         this.x = x;
         this.y = y;
         this.hp = 1;
+        this.destroy = false;
 
         initSpriteColor(color);
 
@@ -63,8 +65,23 @@ public class Block_Breakable extends Block {
                 break;
         }
     }
+    public void update(){
+        if(this.hp < 1){
+            this.destroy = true;
+        }
+        if(destroy){
+            this.hitbox.disableHitbox();
+        }
+    }
+
+    public void takeDamage(int damage){
+        this.hp -= damage;
+    }
 
     public void draw(Graphics2D g) {
-        g.drawImage(sprite,x,y,null);
+        if(!destroy){
+            g.drawImage(sprite,x,y,null);
+        }
+
     }
 }

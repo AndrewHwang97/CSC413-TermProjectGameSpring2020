@@ -4,7 +4,7 @@ import RainbowReef.GameUtilities.Hitbox;
 
 import java.awt.*;
 
-public class Block extends GameObject{
+public  abstract class Block extends GameObject{
     int hp;
     int x;
     int y;
@@ -15,7 +15,8 @@ public class Block extends GameObject{
     public Image getSprite(){return this.sprite;}
     public int getX() { return x; }
     public int getY() { return y; }
-
+    public abstract void takeDamage(int damage);
+    public abstract void update();
     @Override
     public Hitbox getHitbox() {
         return hitbox;
