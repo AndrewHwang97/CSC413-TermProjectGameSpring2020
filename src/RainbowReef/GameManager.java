@@ -22,6 +22,8 @@ public class GameManager extends JPanel{
     private Pop pop;
     private Block testerBlock;
     private CollisonDetector collisonDetector;
+    private int numStarsLeft;
+    Image backgroundImage;
     public static void main(String[] args) {
         GameManager gameManager = new GameManager();
         gameManager.init();
@@ -33,6 +35,7 @@ public class GameManager extends JPanel{
                 gameManager.testerBlock.update();
                 gameManager.collisonDetector.checkCollisions(gameManager.pop,gameManager.testerBlock);
                 gameManager.collisonDetector.checkCollisions(gameManager.katch,gameManager.pop);
+                //gameManager.checkPopBoundary();
                 gameManager.repaint();
                 Thread.sleep(1000 / 144);
             }
@@ -47,13 +50,16 @@ public class GameManager extends JPanel{
         this.jFrame = new JFrame("RainbowReef");
         this.world = new BufferedImage(GameManager.SCREEN_WIDTH, GameManager.SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
         BufferedImage katchImage = null;
+        backgroundImage = null;
+        numStarsLeft = 3;
         try {
             katchImage = read(GameManager.class.getClassLoader().getResource("Katch.gif"));
+            backgroundImage = read(GameManager.class.getClassLoader().getResource("Background1.bmp"));
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
         katch = new Katch(katchImage, GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT - 100);
-        pop = new Pop(GameManager.SCREEN_WIDTH/2,90);
+        pop = new Pop(GameManager.SCREEN_WIDTH/2,90,this);
         testerBlock = new Block_Breakable(GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT-200,"green");
 
         collisonDetector = new CollisonDetector();
@@ -71,6 +77,12 @@ public class GameManager extends JPanel{
         this.jFrame.setVisible(true);
     }
 
+
+    public void deductStar(){
+        this.numStarsLeft--;
+        System.out.println("num stars: " + numStarsLeft);
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
@@ -78,7 +90,9 @@ public class GameManager extends JPanel{
         buffer = world.createGraphics();
         buffer.setColor(Color.black);
         buffer.fillRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+        buffer.drawImage(backgroundImage,0,0,null);
         this.katch.draw(buffer);
+
         this.pop.draw(buffer);
         this.katch.getHitbox("left").draw(buffer);
         this.katch.getHitbox("mid").draw(buffer);

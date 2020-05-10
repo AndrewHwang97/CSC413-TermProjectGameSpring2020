@@ -1,6 +1,7 @@
 package RainbowReef.GameUtilities;
 
 import RainbowReef.Blocks.*;
+import RainbowReef.GameManager;
 import RainbowReef.GameObjects.*;
 
 import java.awt.*;
@@ -52,6 +53,7 @@ public class CollisonDetector {
             obj2.changeSpeeds(1,-1);
         }
     }
+
 
 
 }

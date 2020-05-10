@@ -12,6 +12,7 @@ public class Katch extends GameObject{
     Hitbox hbLeft;
     Hitbox hbMid;
     Hitbox hbRight;
+
     public Katch(Image sprite, int x, int y){
         this.x = x;
         this.y = y;
@@ -19,6 +20,7 @@ public class Katch extends GameObject{
         hbLeft = new Hitbox(this, this.sprite.getWidth(null)/3,0);
         hbMid = new Hitbox(this, this.sprite.getWidth(null)/3,this.sprite.getWidth(null)/3);
         hbRight = new Hitbox(this, this.sprite.getWidth(null)/3,this.sprite.getWidth(null)/3 * 2);
+
     }
 
     void toggleLeftPressed(){this.leftPressed = true;}
@@ -57,6 +59,7 @@ public class Katch extends GameObject{
         hbLeft.update(this, 0);
         hbMid.update(this, this.sprite.getWidth(null)/3);
         hbRight.update(this, this.sprite.getWidth(null)/3 * 2);
+
 
     }
 
