@@ -23,8 +23,8 @@ public class Pop extends GameObject {
         this.x = x;
         this.y = y;
         this.sprite = popImage;
-        this.hitbox = new Hitbox(this);
-        this.hitbox.getHitbox().width -= 25;
+        this.hitbox = new Hitbox(this, this.sprite.getWidth(null)-25, this.sprite.getWidth(null)/3 + 5);
+        //this.hitbox.getHitbox().width -= 25;
         this.gameManager = gameManager;
     }
 
@@ -33,6 +33,7 @@ public class Pop extends GameObject {
     }
 
     public  int getY(){return this.y;}
+    public void setY(int value){this.y = value; }
     public int getxSpeed() {
         return xSpeed;
     }
@@ -45,7 +46,7 @@ public class Pop extends GameObject {
         this.x += xSpeed;
         this.y += ySpeed;
         checkBounds();
-        this.hitbox.update(this);
+        this.hitbox.update(this, this.sprite.getWidth(null)/3+5);
         checkPopBoundary();
     }
 

@@ -25,6 +25,7 @@ public class CollisonDetector {
         }
     }
 */
+/*
     public void checkCollisions(GameObject obj1, Block obj2){
         hbObj1 = obj1.getHitbox().hitbox;
         hbObj2 = obj2.getHitbox().hitbox;
@@ -34,7 +35,18 @@ public class CollisonDetector {
             obj2.takeDamage(1);
         }
     }
+*/
 
+    public void checkCollisions(Pop obj1, Block obj2){
+        hbObj1 = obj1.getHitbox().hitbox;
+        hbObj2 = obj2.getHitbox().hitbox;
+
+        if(hbObj1.intersects(hbObj2)){
+            System.out.println("hit");
+            obj2.takeDamage(1);
+            obj1.changeSpeeds(obj1.getxSpeed()*-1,obj1.getySpeed()*-1);
+        }
+    }
     public void checkCollisions(Katch obj1, Pop obj2){
         hbObj1 = obj1.getHitbox("left").hitbox;
         hbObj2 = obj1.getHitbox("mid").hitbox;
@@ -43,14 +55,15 @@ public class CollisonDetector {
 
         if(hbObj1.intersects(hbObj4)){
             System.out.println("HIT LEFT");
-            obj2.changeSpeeds(-1,-1);
+            obj2.changeSpeeds(-2,-2);
         }
         if(hbObj2.intersects(hbObj4)){
+            obj2.setY(obj2.getY() -5);
             obj2.changeSpeeds(obj2.getxSpeed()*-1,obj2.getySpeed()*-1);
         }
         if(hbObj3.intersects(hbObj4)){
             System.out.println("HIT Right");
-            obj2.changeSpeeds(1,-1);
+            obj2.changeSpeeds(2,-2);
         }
     }
 

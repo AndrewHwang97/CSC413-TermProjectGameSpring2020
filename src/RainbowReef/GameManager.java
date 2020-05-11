@@ -60,7 +60,7 @@ public class GameManager extends JPanel{
         }
         katch = new Katch(katchImage, GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT - 100);
         pop = new Pop(GameManager.SCREEN_WIDTH/2,90,this);
-        testerBlock = new Block_Breakable(GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT-200,"green");
+        testerBlock = new Block_Breakable(GameManager.SCREEN_WIDTH/2 - 100,GameManager.SCREEN_HEIGHT-200,"green");
 
         collisonDetector = new CollisonDetector();
         KatchControls katchControl = new KatchControls(katch,
@@ -94,9 +94,11 @@ public class GameManager extends JPanel{
         this.katch.draw(buffer);
 
         this.pop.draw(buffer);
+        this.pop.getHitbox().draw(buffer);
         this.katch.getHitbox("left").draw(buffer);
         this.katch.getHitbox("mid").draw(buffer);
         this.katch.getHitbox("right").draw(buffer);
+
         this.testerBlock.draw(buffer);
         this.testerBlock.getHitbox().draw(buffer);
 

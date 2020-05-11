@@ -1,5 +1,6 @@
 package RainbowReef.GameObjects;
 
+import RainbowReef.GameManager;
 import RainbowReef.GameUtilities.*;
 
 import java.awt.*;
@@ -8,7 +9,7 @@ public class Katch extends GameObject{
 
     private boolean rightPressed;
     private boolean leftPressed;
-    private int moveSpeed = 5;
+    private int moveSpeed = 2;
     Hitbox hbLeft;
     Hitbox hbMid;
     Hitbox hbRight;
@@ -59,7 +60,7 @@ public class Katch extends GameObject{
         hbLeft.update(this, 0);
         hbMid.update(this, this.sprite.getWidth(null)/3);
         hbRight.update(this, this.sprite.getWidth(null)/3 * 2);
-
+        checkBounds();
 
     }
 
@@ -71,6 +72,12 @@ public class Katch extends GameObject{
         x += moveSpeed;
     }
 
+    void checkBounds(){
+        if(this.x < 20)
+            this.x = 20;
+        if(this.x > GameManager.SCREEN_WIDTH-80)
+            this.x = GameManager.SCREEN_WIDTH-80;
+    }
     public void draw(Graphics2D g) {
         g.drawImage(sprite,x,y,null);
         g.setColor(Color.green);
