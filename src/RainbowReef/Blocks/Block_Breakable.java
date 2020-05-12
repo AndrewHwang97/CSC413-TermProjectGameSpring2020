@@ -1,5 +1,6 @@
 package RainbowReef.Blocks;
 
+import RainbowReef.GameManager;
 import RainbowReef.GameUtilities.Hitbox;
 
 import java.awt.*;
@@ -14,8 +15,9 @@ public class Block_Breakable extends Block {
     Image lightBlue;
     Image darkBlue;
     Image white;
+    GameManager gameManager;
     boolean destroy;
-    public Block_Breakable(int x, int y, String color){
+    public Block_Breakable(int x, int y, String color, GameManager gameManager){
         try{
             violet = read(Block.class.getClassLoader().getResource("Block1.gif"));
             yellow = read(Block.class.getClassLoader().getResource("Block2.gif"));
@@ -36,6 +38,8 @@ public class Block_Breakable extends Block {
 
         this.hitbox = new Hitbox(this);
         this.breakable = true;
+        this.points = 50;
+        this.gameManager = gameManager;
     }
 
     public void initSpriteColor(String color){
@@ -67,11 +71,12 @@ public class Block_Breakable extends Block {
         }
     }
     public void update(){
-        if(this.hp < 1){
-            this.destroy = true;
-        }
-        if(destroy){
-            this.hitbox.disableHitbox();
+        if(!destroy){
+            if(this.hp < 1){
+                this.destroy = true;
+                this.hitbox.disableHitbox();
+                gameManager.sendPoints(this.points);
+            }
         }
     }
 

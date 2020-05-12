@@ -22,6 +22,7 @@ public class Block_Wall extends Block {
         this.hitbox = new Hitbox(this);
         this.hitbox.getHitbox().height -= 3;
         this.hitbox.getHitbox().width -= 3;
+        this.points = 0;
     }
 
     public void takeDamage(int damage) {

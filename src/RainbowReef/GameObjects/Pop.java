@@ -58,7 +58,7 @@ public class Pop extends GameObject {
     }
 
     void checkBounds(){
-        if(this.x < 30 || this.x > GameManager.SCREEN_WIDTH -80){
+        if(this.x < 30 || this.x > GameManager.SCREEN_WIDTH -85){
             changeSpeeds(xSpeed*-1,ySpeed);
         }
         if(this.y < 40 ){

@@ -51,6 +51,16 @@ public class CollisonDetector {
             }
         }
     }
+
+    public void checkCollisions(Pop obj1, Bigleg obj2){
+        hbObj1 = obj1.getHitbox().hitbox;
+        hbObj2 = obj2.getHitbox().hitbox;
+
+        if(hbObj1.intersects(hbObj2)){
+            obj2.deductHp();
+            obj1.changeSpeeds(obj1.getxSpeed()*-1,obj1.getySpeed()*-1);
+        }
+    }
     public void checkCollisions(Katch obj1, Pop obj2){
         hbObj1 = obj1.getHitbox("left").hitbox;
         hbObj2 = obj1.getHitbox("mid").hitbox;

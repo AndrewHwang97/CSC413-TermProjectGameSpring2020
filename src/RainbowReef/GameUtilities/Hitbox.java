@@ -12,14 +12,12 @@ public class Hitbox {
     public Hitbox(GameObject obj){
         this.x = obj.getX();
         this.y = obj.getY();
-        System.out.println("THIS X: " + x);
         hitbox = new Rectangle(x,y,obj.getSprite().getWidth(null), obj.getSprite().getHeight(null));
     }
 
     public Hitbox(GameObject obj,int width,int xOffset){
         this.x = obj.getX();
         this.y = obj.getY();
-        System.out.println("THIS X: " + x);
         hitbox = new Rectangle(x + xOffset,y,width, obj.getSprite().getHeight(null));
     }
 

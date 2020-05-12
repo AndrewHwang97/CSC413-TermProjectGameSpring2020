@@ -21,6 +21,7 @@ public class Block_Unbreakable extends Block{
         this.hitbox = new Hitbox(this);
         this.hitbox.getHitbox().width -= 8;
         this.breakable = false;
+        this.points = 0;
     }
 
     public  void takeDamage(int damage){}
