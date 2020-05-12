@@ -42,9 +42,13 @@ public class CollisonDetector {
         hbObj2 = obj2.getHitbox().hitbox;
 
         if(hbObj1.intersects(hbObj2)){
-            System.out.println("hit");
-            obj2.takeDamage(1);
-            obj1.changeSpeeds(obj1.getxSpeed()*-1,obj1.getySpeed()*-1);
+            if(!obj2.isBreakable())
+                obj1.changeSpeeds(obj1.getxSpeed()*-1,obj1.getySpeed()*-1);
+            else{
+                obj1.changeSpeeds(obj1.getxSpeed()*1,obj1.getySpeed()*-1);
+                System.out.println("hit");
+                obj2.takeDamage(1);
+            }
         }
     }
     public void checkCollisions(Katch obj1, Pop obj2){
@@ -53,17 +57,22 @@ public class CollisonDetector {
         hbObj3 = obj1.getHitbox("right").hitbox;
         hbObj4 = obj2.getHitbox().hitbox;
 
+        int randNumX;
+        int randNumY;
+        randNumX = (int)(Math.random() * (5 - 1)+ 1);
+        randNumY = (int)(Math.random() * (4 - 1)+ 1);
+
         if(hbObj1.intersects(hbObj4)){
             System.out.println("HIT LEFT");
-            obj2.changeSpeeds(-2,-2);
+            obj2.changeSpeeds(randNumX*-1,randNumY*-1);
         }
         if(hbObj2.intersects(hbObj4)){
             obj2.setY(obj2.getY() -5);
-            obj2.changeSpeeds(obj2.getxSpeed()*-1,obj2.getySpeed()*-1);
+            obj2.changeSpeeds(obj2.getxSpeed(),obj2.getySpeed()*-1);
         }
         if(hbObj3.intersects(hbObj4)){
             System.out.println("HIT Right");
-            obj2.changeSpeeds(2,-2);
+            obj2.changeSpeeds(randNumX,randNumY*-1);
         }
     }
 

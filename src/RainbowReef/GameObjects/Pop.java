@@ -16,7 +16,7 @@ public class Pop extends GameObject {
 
     public Pop(int x, int y, GameManager gameManager){
         try{
-            popImage = read(Block.class.getClassLoader().getResource("Pop.gif"));
+            popImage = read(Block.class.getClassLoader().getResource("pop1.png"));
         }catch (Exception e){
             System.out.println("ERR in Pop class: " + e);
         }
@@ -24,6 +24,8 @@ public class Pop extends GameObject {
         this.y = y;
         this.sprite = popImage;
         this.hitbox = new Hitbox(this, this.sprite.getWidth(null)-25, this.sprite.getWidth(null)/3 + 5);
+        this.hitbox.getHitbox().height /= 2;
+        this.hitbox.getHitbox().x /=2;
         //this.hitbox.getHitbox().width -= 25;
         this.gameManager = gameManager;
     }
@@ -46,7 +48,7 @@ public class Pop extends GameObject {
         this.x += xSpeed;
         this.y += ySpeed;
         checkBounds();
-        this.hitbox.update(this, this.sprite.getWidth(null)/3+5);
+        this.hitbox.update(this, this.sprite.getWidth(null)/3);
         checkPopBoundary();
     }
 
@@ -59,7 +61,7 @@ public class Pop extends GameObject {
         if(this.x < 30 || this.x > GameManager.SCREEN_WIDTH -80){
             changeSpeeds(xSpeed*-1,ySpeed);
         }
-        if(this.y < 30 ){
+        if(this.y < 40 ){
             changeSpeeds(xSpeed,ySpeed*-1);
         }
 

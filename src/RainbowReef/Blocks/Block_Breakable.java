@@ -35,6 +35,7 @@ public class Block_Breakable extends Block {
         initSpriteColor(color);
 
         this.hitbox = new Hitbox(this);
+        this.breakable = true;
     }
 
     public void initSpriteColor(String color){
@@ -76,6 +77,7 @@ public class Block_Breakable extends Block {
 
     public void takeDamage(int damage){
         this.hp -= damage;
+        System.out.println("hp: " + hp);
     }
 
     public void draw(Graphics2D g) {

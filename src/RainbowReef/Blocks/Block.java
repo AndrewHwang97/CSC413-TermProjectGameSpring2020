@@ -17,6 +17,7 @@ public  abstract class Block extends GameObject{
     public int getY() { return y; }
     public abstract void takeDamage(int damage);
     public abstract void update();
+    public boolean isBreakable(){return breakable;}
     @Override
     public Hitbox getHitbox() {
         return hitbox;
