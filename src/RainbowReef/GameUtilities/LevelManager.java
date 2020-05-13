@@ -50,21 +50,45 @@ public class LevelManager {
                             blocks.add(block);
                             break;
                         case "2":
-                            Block_Breakable blockyellow = new Block_Breakable(currCol*30,currRow*30,"red",gameManager);
+                            Block_Breakable blockyellow = new Block_Breakable(currCol*30,currRow*30,"yellow",gameManager);
                             blocks.add(blockyellow);
                             break;
+                        case "3":
+                            Block_Breakable blockred = new Block_Breakable(currCol*30,currRow*30,"red",gameManager);
+                            blocks.add(blockred);
+                            break;
+                        case "4":
+                            Block_Breakable blockgreen = new Block_Breakable(currCol*30,currRow*30,"green",gameManager);
+                            blocks.add(blockgreen);
+                            break;
+                        case "5":
+                            Block_Breakable blocklightblue = new Block_Breakable(currCol*30,currRow*30,"lightBlue",gameManager);
+                            blocks.add(blocklightblue);
+                            break;
+                        case "6":
+                            Block_Breakable blockdarkBlue = new Block_Breakable(currCol*30,currRow*30,"darkBlue",gameManager);
+                            blocks.add(blockdarkBlue);
+                            break;
+                        case "7":
+                            Block_Breakable blockwhite = new Block_Breakable(currCol*30,currRow*30,"white",gameManager);
+                            blocks.add(blockwhite);
+                            break;
                         case "8":
-                            Block_Unbreakable blockUnbreak = new Block_Unbreakable(currCol*30,currRow*30);
+                            Block_Unbreakable blockUnbreak = new Block_Unbreakable(currCol*30,currRow*30,gameManager);
                             blocks.add(blockUnbreak);
                             break;
                         case "9":
-                            Block_Wall wall = new Block_Wall(currCol*30,currRow*30);
+                            Block_Wall wall = new Block_Wall(currCol*30,currRow*30,gameManager);
                             blocks.add(wall);
                             break;
                         case "10":
                             Bigleg bigleg = new Bigleg(currCol*30,currRow*30,gameManager);
                             biglegs.add(bigleg);
                             number_biglegs++;
+                            break;
+                        case "11":
+                            Block_Breakable life = new Block_Breakable(currCol*30,currRow*30,"life",gameManager);
+                            blocks.add(life);
                             break;
                     }
                 }

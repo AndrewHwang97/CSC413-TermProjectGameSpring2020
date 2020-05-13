@@ -41,11 +41,14 @@ public class Bigleg extends GameObject {
 
     }
 
-    public void deductHp(){this.hp--;}
+    public void deductHp(){
+        this.hp--;
+    }
     public void destroy(){
         this.hitbox.disableHitbox();
         this.isDestroyed = true;
         gameManager.deductBigleg();
+        gameManager.getSoundManager().playSound("sounds/Sound_bigleg.wav");
     }
 
     public void draw(Graphics2D g) {

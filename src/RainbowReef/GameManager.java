@@ -31,10 +31,15 @@ public class GameManager extends JPanel{
     private CollisonDetector collisonDetector;
     private LevelManager levelManager;
     private ScoreManager scoreManager;
+    private SoundManager soundManager;
     private int score;
     private int numStarsLeft;
     private int numBiglegsLeft;
     private int numLevels;
+    private boolean levelEnd;
+    private boolean respawned = false;
+
+
     private int currLevel;
     private String lvlName;
     Image backgroundImage;
@@ -64,10 +69,17 @@ public class GameManager extends JPanel{
                 }
 
                 if(gameManager.numBiglegsLeft < 1){
-                    System.out.println("Level completed, loading next level....");
-                    gameManager.currLevel++;
-                    gameManager.lvlName = "map_0"+gameManager.currLevel;
-                    gameManager.loadLevelResources(gameManager.lvlName);
+                    if(gameManager.currLevel == 3){
+                        System.exit(1);
+                    }
+                    else {
+                        gameManager.levelEnd = true;
+                        gameManager.repaint();
+                        gameManager.currLevel++;
+                        gameManager.lvlName = "map_0"+gameManager.currLevel;
+                        gameManager.loadLevelResources(gameManager.lvlName);
+                    }
+
                 }
 
                 gameManager.repaint();
@@ -86,11 +98,12 @@ public class GameManager extends JPanel{
         BufferedImage katchImage = null;
         backgroundImage = null;
         numStarsLeft = 3;
+        respawned = true;
 
-        //blocks = new ArrayList<Block>();
 
         scoreManager = new ScoreManager();
-
+        soundManager = new SoundManager();
+        soundManager.playSound("sounds/Music.wav");
         levelManager = new LevelManager(this);
 
         numLevels = levelManager.getNumLevels();
@@ -101,54 +114,18 @@ public class GameManager extends JPanel{
         try {
             katchImage = read(GameManager.class.getClassLoader().getResource("Katch.gif"));
             backgroundImage = read(GameManager.class.getClassLoader().getResource("Background1.bmp"));
-/*
-            InputStreamReader isr = new InputStreamReader(GameManager.class.getClassLoader().getResourceAsStream("maps/map_01"));
-            BufferedReader mapReader = new BufferedReader(isr);
 
-            String row = mapReader.readLine();
-            if(row == null){
-                throw new IOException("no data for map file");
-            }
-            String[] mapInfo = row.split("\t");
-            int numCols = Integer.parseInt(mapInfo[0]);
-            int numRows = Integer.parseInt(mapInfo[1]);
-
-            for(int currRow = 0; currRow < numRows; currRow++){
-                row = mapReader.readLine();
-                mapInfo = row.split("\t");
-                for(int currCol = 0; currCol < numCols; currCol++){
-                    switch (mapInfo[currCol]){
-                        case "1":
-                            Block_Breakable block = new Block_Breakable(currCol*30,currRow*30,"violet");
-                            this.blocks.add(block);
-                            break;
-                        case "2":
-                            Block_Breakable blockyellow = new Block_Breakable(currCol*30,currRow*30,"red");
-                            this.blocks.add(blockyellow);
-                            break;
-                        case "8":
-                            Block_Unbreakable blockUnbreak = new Block_Unbreakable(currCol*30,currRow*30);
-                            this.blocks.add(blockUnbreak);
-                            break;
-                        case "9":
-                            Block_Wall wall = new Block_Wall(currCol*30,currRow*30);
-                            this.blocks.add(wall);
-                            break;
-                    }
-                }
-            }
-
- */
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
 
-        katch = new Katch(katchImage, GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT - 100);
-        pop = new Pop(GameManager.SCREEN_WIDTH/2,150,this);
-        collisonDetector = new CollisonDetector();
+        katch = new Katch(katchImage, GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT - 100,this);
+        pop = new Pop(GameManager.SCREEN_WIDTH/2,GameManager.SCREEN_HEIGHT - 130,this);
+        collisonDetector = new CollisonDetector(this);
         KatchControls katchControl = new KatchControls(katch,
                 KeyEvent.VK_LEFT,
-                KeyEvent.VK_RIGHT);
+                KeyEvent.VK_RIGHT,
+                KeyEvent.VK_SPACE);
 
         this.jFrame.setLayout(new BorderLayout());
         this.jFrame.add(this);
@@ -160,10 +137,16 @@ public class GameManager extends JPanel{
         this.jFrame.setVisible(true);
     }
 
+    public void setRespawned(Boolean status){respawned = status;}
+    public int getKatchXPosition(){return katch.getX();}
 
     public void deductStar(){
         this.numStarsLeft--;
         System.out.println("num stars: " + numStarsLeft);
+    }
+
+    public void addLife(){
+        numStarsLeft++;
     }
     public void deductBigleg(){
         this.numBiglegsLeft--;
@@ -173,13 +156,17 @@ public class GameManager extends JPanel{
         blocks = levelManager.loadLevel(mapName,"blocks");
         biglegs = levelManager.loadLevel(mapName,"biglegs");
         numBiglegsLeft=levelManager.getNumBiglegs();
+        this.pop.respawn();
+        levelEnd = false;
     }
+    public Pop getPop(){return pop;}
 
     public void sendPoints(int points){
         scoreManager.addtoScore(points);
         System.out.println(scoreManager.getPlayerScore());
     }
 
+    public SoundManager getSoundManager(){return soundManager;}
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
@@ -203,7 +190,13 @@ public class GameManager extends JPanel{
 
         Font font = new Font("Verdana",Font.BOLD,20);
         g2.setFont(font);
-        g2.setColor(Color.white);
+        if(levelEnd){
+            g2.setColor(Color.BLACK);
+            g2.drawString("Level Completed! Loading next level...", SCREEN_WIDTH/2-180,SCREEN_HEIGHT/2);
+        }
+        else{
+            g2.setColor(Color.WHITE);
+        }
         g2.drawString("SCORE: " + this.score ,20 ,20);
         g2.drawString("LIVES: " + this.numStarsLeft ,SCREEN_WIDTH-300 ,20);
 

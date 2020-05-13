@@ -9,12 +9,14 @@ public class Katch extends GameObject{
 
     private boolean rightPressed;
     private boolean leftPressed;
-    private int moveSpeed = 2;
+    private boolean launchPressed;
+    private int moveSpeed = 4;
     Hitbox hbLeft;
     Hitbox hbMid;
     Hitbox hbRight;
-
-    public Katch(Image sprite, int x, int y){
+    GameManager gameManager;
+    public Katch(Image sprite, int x, int y, GameManager gameManager){
+        this.gameManager = gameManager;
         this.x = x;
         this.y = y;
         this.sprite = sprite;
@@ -26,6 +28,8 @@ public class Katch extends GameObject{
 
     void toggleLeftPressed(){this.leftPressed = true;}
     void toggleRightPressed(){this.rightPressed = true;}
+    void toggleLaunchPressed(){this.launchPressed = true;}
+    void unToggleLaunchPressed(){this.launchPressed = false;}
     void unToggleLeftPressed(){this.leftPressed = false;}
     void unToggleRightPressed(){this.rightPressed = false;}
     public int getX(){return this.x;}
@@ -56,6 +60,9 @@ public class Katch extends GameObject{
         }
         if(this.rightPressed){
             moveRight();
+        }
+        if(this.launchPressed){
+            gameManager.getPop().launch();
         }
         hbLeft.update(this, 0);
         hbMid.update(this, this.sprite.getWidth(null)/3);

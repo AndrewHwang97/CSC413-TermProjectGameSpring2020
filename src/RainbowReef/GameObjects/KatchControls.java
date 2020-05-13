@@ -9,12 +9,13 @@ public class KatchControls implements KeyListener {
 
     private final int right;
     private final int left;
+    private final int launch;
 
-
-    public KatchControls(Katch katch, int left, int right) {
+    public KatchControls(Katch katch, int left, int right, int launch) {
         this.katch = katch;
         this.right = right;
         this.left = left;
+        this.launch = launch;
     }
 
     @Override
@@ -31,6 +32,9 @@ public class KatchControls implements KeyListener {
         if (keyPressed == right) {
             this.katch.toggleRightPressed();
         }
+        if (keyPressed == launch) {
+            this.katch.toggleLaunchPressed();
+        }
     }
 
     @Override
@@ -41,6 +45,9 @@ public class KatchControls implements KeyListener {
         }
         if (keyReleased  == right) {
             this.katch.unToggleRightPressed();
+        }
+        if (keyReleased  == launch) {
+            this.katch.unToggleLaunchPressed();
         }
     }
 }

@@ -11,9 +11,11 @@ public class CollisonDetector {
     Rectangle hbObj2;
     Rectangle hbObj3;
     Rectangle hbObj4;
+    GameManager gameManager;
 
-    public CollisonDetector(){
-        // nothing here?
+    public CollisonDetector(GameManager gameManager){
+
+        this.gameManager = gameManager;
     }
 /*
     public void checkCollisions(GameObject obj1, GameObject obj2){
@@ -45,6 +47,9 @@ public class CollisonDetector {
             if(!obj2.isBreakable())
                 obj1.changeSpeeds(obj1.getxSpeed()*-1,obj1.getySpeed()*-1);
             else{
+                if(obj2.getLifePlus()){
+                    gameManager.addLife();
+                }
                 obj1.changeSpeeds(obj1.getxSpeed()*1,obj1.getySpeed()*-1);
                 System.out.println("hit");
                 obj2.takeDamage(1);

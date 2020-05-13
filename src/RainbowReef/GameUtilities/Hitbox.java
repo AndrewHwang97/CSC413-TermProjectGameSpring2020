@@ -39,6 +39,13 @@ public class Hitbox {
         this.hitbox.y = obj.getY();
 
     }
+    public void update(GameObject obj, int xOffset, int yOffset){
+        this.x = obj.getX() + xOffset;
+        this.y = obj.getY() + yOffset;
+        this.hitbox.x = obj.getX() + xOffset;
+        this.hitbox.y = obj.getY() + yOffset;
+
+    }
 
     public void disableHitbox(){
         this.hitbox.width = 0;

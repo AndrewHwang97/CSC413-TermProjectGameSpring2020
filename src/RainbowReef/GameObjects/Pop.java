@@ -10,8 +10,9 @@ import static javax.imageio.ImageIO.read;
 
 public class Pop extends GameObject {
     int xSpeed = 0;
-    int ySpeed = 1;
+    int ySpeed = -2;
     Image popImage;
+    boolean stop;
     GameManager gameManager;
 
     public Pop(int x, int y, GameManager gameManager){
@@ -24,10 +25,11 @@ public class Pop extends GameObject {
         this.y = y;
         this.sprite = popImage;
         this.hitbox = new Hitbox(this, this.sprite.getWidth(null)-25, this.sprite.getWidth(null)/3 + 5);
-        this.hitbox.getHitbox().height /= 2;
+        this.hitbox.getHitbox().height /= 3;
         this.hitbox.getHitbox().x /=2;
         //this.hitbox.getHitbox().width -= 25;
         this.gameManager = gameManager;
+        this.stop = true;
     }
 
     public  int getX(){
@@ -45,11 +47,18 @@ public class Pop extends GameObject {
     }
 
     public void update(){
-        this.x += xSpeed;
-        this.y += ySpeed;
-        checkBounds();
-        this.hitbox.update(this, this.sprite.getWidth(null)/3);
-        checkPopBoundary();
+        if(this.stop){
+            this.x = gameManager.getKatchXPosition();
+            this.y = this.y;
+        }
+        else{
+            this.x += xSpeed;
+            this.y += ySpeed;
+            checkBounds();
+            this.hitbox.update(this, this.sprite.getWidth(null)/3,this.sprite.getHeight(null)/3 + 5);
+            checkPopBoundary();
+        }
+
     }
 
     public void changeSpeeds(int xSpeed, int ySpeed){
@@ -73,11 +82,15 @@ public class Pop extends GameObject {
             this.respawn();
         }
     }
+    public void launch(){
+        this.stop = false;
+    }
     public void respawn(){
         this.x = GameManager.SCREEN_WIDTH/2;
-        this.y = 90;
+        this.y = GameManager.SCREEN_HEIGHT - 130;
+        this.stop = true;
         this.xSpeed = 0;
-        this.ySpeed = 2;
+        this.ySpeed = -2;
     }
     public void draw(Graphics2D g) {
         g.drawImage(sprite,x,y,null);

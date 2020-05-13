@@ -11,6 +11,7 @@ public  abstract class Block extends GameObject{
     Image sprite;
     Hitbox hitbox;
     boolean breakable;
+    boolean lifePlus = false;
     int points;
 
     public Image getSprite(){return this.sprite;}
@@ -18,6 +19,7 @@ public  abstract class Block extends GameObject{
     public int getY() { return y; }
     public abstract void takeDamage(int damage);
     public abstract void update();
+    public abstract boolean getLifePlus();
     public boolean isBreakable(){return breakable;}
     public int getPoints(){return points;}
     @Override
