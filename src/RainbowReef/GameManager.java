@@ -156,7 +156,8 @@ public class GameManager extends JPanel{
         blocks = levelManager.loadLevel(mapName,"blocks");
         biglegs = levelManager.loadLevel(mapName,"biglegs");
         numBiglegsLeft=levelManager.getNumBiglegs();
-        this.pop.respawn();
+        if(this.levelEnd)
+            this.pop.respawn();
         levelEnd = false;
     }
     public Pop getPop(){return pop;}
