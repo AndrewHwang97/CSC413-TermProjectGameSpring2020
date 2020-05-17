@@ -15,7 +15,7 @@
    csc413-secondgame-AndrewHwang97/
 
 ## How to run the game:
-   Download files from github. using the command line, change directories to csc413-tankgame-AndrewHwang97/jar. inside the jar directory, use command: java -jar csc413-tankgame-AndrewHwang97.jar to start the game.
+   Download files from github. using the command line, change directories to csc413-secondgame-AndrewHwang97/jar. inside the jar directory, use command: java -jar csc413-secondgame-AndrewHwang97.jar to start the game.
 
 ## Controls:  
             ArrowLeft : move right 
