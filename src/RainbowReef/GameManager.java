@@ -112,7 +112,7 @@ public class GameManager extends JPanel{
         loadLevelResources(lvlName);
 
         try {
-            katchImage = read(GameManager.class.getClassLoader().getResource("Katch.gif"));
+            katchImage = read(GameManager.class.getClassLoader().getResource("Katch.png"));
             backgroundImage = read(GameManager.class.getClassLoader().getResource("Background1.bmp"));
 
         } catch (IOException ex) {
@@ -177,14 +177,11 @@ public class GameManager extends JPanel{
         buffer.fillRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
         buffer.drawImage(backgroundImage,0,0,null);
         this.katch.draw(buffer);
-        this.blocks.forEach(block-> block.getHitbox().draw(buffer));
+
         this.blocks.forEach(block-> block.draw(buffer));
         this.biglegs.forEach(bigleg -> bigleg.draw(buffer));
         this.pop.draw(buffer);
-        this.pop.getHitbox().draw(buffer);
-        this.katch.getHitbox("left").draw(buffer);
-        this.katch.getHitbox("mid").draw(buffer);
-        this.katch.getHitbox("right").draw(buffer);
+
 
 
         g2.drawImage(world,0,0,null);
@@ -200,6 +197,7 @@ public class GameManager extends JPanel{
         }
         g2.drawString("SCORE: " + this.score ,20 ,20);
         g2.drawString("LIVES: " + this.numStarsLeft ,SCREEN_WIDTH-300 ,20);
+        g2.drawString("Level " + this.currLevel + "/3" ,SCREEN_WIDTH/2 - 100 ,20);
 
     }
 }
