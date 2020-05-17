@@ -17,8 +17,7 @@
 ## How to run the game:
    Download files from github. using the command line, change directories to csc413-tankgame-AndrewHwang97/jar. inside the jar directory, use command: java -jar csc413-tankgame-AndrewHwang97.jar to start the game.
 
-## Controls: 
-   # player1: 
+## Controls:  
             ArrowLeft : move right 
             ArrowRight : move left
             Spacebar : Launch Pop (if respawned)
