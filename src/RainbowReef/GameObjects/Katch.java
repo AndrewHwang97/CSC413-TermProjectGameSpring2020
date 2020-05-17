@@ -87,7 +87,6 @@ public class Katch extends GameObject{
     }
     public void draw(Graphics2D g) {
         g.drawImage(sprite,x,y,null);
-        g.setColor(Color.green);
-        g.drawRect(x,y,this.getSprite().getWidth(null),this.getSprite().getHeight(null));
+
     }
 }
